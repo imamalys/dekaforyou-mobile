@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">DekaForYou</string>
+    <string name="skip">Skip</string>
+    <string name="lupa_password">Lupa Password?</string>
+    <string name="continue_with_facebook">Continue With Facebook</string>
+    <string name="or">OR</string>
+    <string name="sign_in">Sign In</string>
+    <string name="show">show</string>
+    <string name="hide">hide</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="dekaforyou">Dekaforyou</string>
+    <string name="tunggu_sebentar">Tunggu Sebentar</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="welcome_back">Welcome back</string>
+    <string name="dr_lita_sari">Dr. Lita Sari</string>
+    <string name="hari_ini_jumat_20_september_2020">Hari ini jumat 20 September 2020</string>
+    <string name="cuaca_sedang_cerah_berawan">cuaca sedang cerah berawan</string>
+    <string name="shift">Shift :</string>
+    <string name="jadwal_masuk">Jadwal Masuk :</string>
+    <string name="jadwal_pulang">Jadwal Pulang :</string>
+    <string name="terlambat">Terlambat :</string>
+    <string name="pagi">Pagi</string>
+    <string name="_08_00_00">08:00:00</string>
+    <string name="_17_00_00">17:00:00</string>
+    <string name="_00_00_00">00:00:00</string>
+    <string name="jarak_menuju_lokasi_absensi">Jarak menuju lokasi absensi :</string>
+    <string name="_1200_m">1200 M</string>
+    <string name="tukar_shift">Tukar Shift</string>
+    <string name="cuti">Cuti</string>
+    <string name="lembur">Lembur</string>
+    <string name="absen">Absen</string>
+</resources>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/beranda"
+        android:title="Beranda"
+        android:icon="@drawable/beranda" />
+    <item android:id="@+id/kalender"
+        android:title="Kalender"
+        android:icon="@drawable/kalender" />
+    <item android:id="@+id/profile"
+        android:title="Profile"
+        android:icon="@drawable/profile" />
+    <item android:id="@+id/inbox"
+        android:title="Inbox"
+        android:icon="@drawable/inbox" />
+    <item android:id="@+id/more"
+        android:title="More"
+        android:icon="@drawable/more" />
+</menu>
