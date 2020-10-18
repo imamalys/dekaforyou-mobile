@@ -9,7 +9,6 @@ import android.text.TextWatcher
 import android.util.Patterns
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.blankj.utilcode.util.IntentUtils
 import com.blankj.utilcode.util.ToastUtils
 import id.ias.dekaforyou.constant.LoginConstant
 import id.ias.dekaforyou.data.GlobalUser
@@ -79,7 +78,7 @@ class LoginActivity : AppCompatActivity() {
                                     val user = it[0]
                                     LoginConstant.setLoginUser(user.token!!, user.id, user.name)
                                     ToastUtils.showLong("Sukses")
-                                    GlobalUser.currentUser = user
+                                    GlobalUser.currentUserModel = user
                                     goToMainActivity()
                                 }?: run {
                                     ToastUtils.showLong("Terdapat masalah pada Pengguna, Silahkan Hubungi Admin")

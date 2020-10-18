@@ -1,7 +1,12 @@
 package id.ias.dekaforyou.view.fragment
 
 import LoadingDialog
+import android.app.Activity
+import android.content.Intent
+import android.location.Location
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,21 +14,33 @@ import androidx.fragment.app.Fragment
 import com.blankj.utilcode.util.ToastUtils
 import id.ias.dekaforyou.MainActivity
 import id.ias.dekaforyou.R
-import id.ias.dekaforyou.constant.LoginConstant
 import id.ias.dekaforyou.data.GlobalUser
+import id.ias.dekaforyou.helper.ImagePickerActivity
 import id.ias.dekaforyou.http.RetrofitManager
-import id.ias.dekaforyou.model.Location
-import id.ias.dekaforyou.model.User
+import id.ias.dekaforyou.model.LocationModel
+import id.ias.dekaforyou.model.UserModel
 import id.ias.dekaforyou.util.ErrorUtil
 import kotlinx.android.synthetic.main.fragment_beranda.*
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
+import java.io.IOException
+
 
 class BerandaFragment : Fragment() {
 
     private val loading = LoadingDialog()
-    lateinit var user: User
-    lateinit var locationUser: Location
+    lateinit var userModel: UserModel
+    lateinit var locationModelUser: LocationModel
+    private val REQUEST_IMAGE = 100
+    private lateinit var mLocation: Location
+
+    fun putLocation(bundle: Bundle) {
+        var checkLocationModel: Location? = bundle.getParcelable("location")
+        if (checkLocationModel?.latitude != 0.0) {
+            mLocation = checkLocationModel!!
+            checkLocation()
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,38 +54,57 @@ class BerandaFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         setAction()
-        checkLocation()
         reloadData()
+//        launchCameraIntent()
     }
 
     private fun setAction() {
-
+        iv_refresh_location.setOnClickListener {
+            MainActivity.mainActivity.checkPermissionsLocation()
+        }
     }
 
     private fun reloadData() {
-        if (::user.isInitialized) {
-            tv_name.text = user.name
+        if (::userModel.isInitialized) {
+            tv_name.text = userModel.name
         } else {
             getUserProfile()
         }
 
-        if (::locationUser.isInitialized) {
-            if (locationUser.isAllowed) {
-                tv_jarak_lokasi.text = locationUser.radius
+        if (::locationModelUser.isInitialized) {
+            if (locationModelUser.isAllowed) {
+                tv_jarak_lokasi.text = locationModelUser.radius
             } else {
-                tv_jarak_lokasi.text = locationUser.distance
+                tv_jarak_lokasi.text = locationModelUser.distance
             }
-        } else {
-            checkLocation()
         }
     }
 
     private fun setUser() {
-        if (GlobalUser.currentUser != null) {
-            user = GlobalUser.currentUser!!
+        if (GlobalUser.currentUserModel != null) {
+            userModel = GlobalUser.currentUserModel!!
         } else {
             getUserProfile()
         }
+    }
+
+    private fun launchCameraIntent() {
+        val intent = Intent(MainActivity.mainActivity, ImagePickerActivity::class.java)
+        intent.putExtra(
+            ImagePickerActivity.INTENT_IMAGE_PICKER_OPTION,
+            ImagePickerActivity.REQUEST_IMAGE_CAPTURE
+        )
+
+        // setting aspect ratio
+        intent.putExtra(ImagePickerActivity.INTENT_LOCK_ASPECT_RATIO, true)
+        intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_X, 1) // 16x9, 1x1, 3:4, 3:2
+        intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_Y, 1)
+
+        // setting maximum bitmap width and height
+        intent.putExtra(ImagePickerActivity.INTENT_SET_BITMAP_MAX_WIDTH_HEIGHT, true)
+        intent.putExtra(ImagePickerActivity.INTENT_BITMAP_MAX_WIDTH, 1000)
+        intent.putExtra(ImagePickerActivity.INTENT_BITMAP_MAX_HEIGHT, 1000)
+        startActivityForResult(intent, REQUEST_IMAGE)
     }
 
     private  fun getUserProfile() {
@@ -86,10 +122,9 @@ class BerandaFragment : Fragment() {
                     try {
                         result.data?.let {
                             val user = it[0]
-                            GlobalUser.currentUser = user
+                            GlobalUser.currentUserModel = user
                             setUser()
 
-                            checkLocation()
                         }?: run {
                             ToastUtils.showLong("Terdapat masalah pada Pengguna, Silahkan Hubungi Admin")
                         }
@@ -117,8 +152,8 @@ class BerandaFragment : Fragment() {
             loading.show(childFragmentManager, null)
         }
         val params = HashMap<String, Any>()
-        params["latitude"] = "-7.073790296376713"
-        params["longitude"] = "110.44048759667872"
+        params["latitude"] = mLocation.latitude.toString()
+        params["longitude"] = mLocation.longitude.toString()
         RetrofitManager.getInstance()?.apiService?.getDistanceLocation(params)
             ?.observeOn(AndroidSchedulers.mainThread())
             ?.subscribeOn(Schedulers.io())
@@ -129,9 +164,8 @@ class BerandaFragment : Fragment() {
                 if (result.success) {
                     try {
                         result.data?.let {
-                            locationUser = it[0]
-                            locationUser.isAllowed = true
-                            reloadData()
+                            locationModelUser = it[0]
+                            locationModelUser.isAllowed = true
                         }?: run {
                             ToastUtils.showLong("Terdapat masalah pada Pengguna, Silahkan Hubungi Admin")
                         }
@@ -141,9 +175,8 @@ class BerandaFragment : Fragment() {
                 } else {
                     try {
                         result.data?.let {
-                            locationUser = it[0]
-                            locationUser.isAllowed = false
-                            reloadData()
+                            locationModelUser = it[0]
+                            locationModelUser.isAllowed = false
                         }?: run {
                             ToastUtils.showLong("Terdapat masalah pada Pengguna, Silahkan Hubungi Admin")
                         }
@@ -151,6 +184,7 @@ class BerandaFragment : Fragment() {
                         e.printStackTrace()
                     }
                     ToastUtils.showLong(result.msg)
+                    reloadData()
                 }
             }, { error ->
                 if(!loading.showsDialog) {
@@ -159,5 +193,22 @@ class BerandaFragment : Fragment() {
                 val errBody = ErrorUtil.getErrorMessage(error)
                 ToastUtils.showLong(errBody)
             })
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (!(requestCode != REQUEST_IMAGE || resultCode != Activity.RESULT_OK)) {
+            val uri: Uri = data!!.getParcelableExtra("path")
+            try {
+                // You can update this bitmap to your server
+                val bitmap = MediaStore.Images.Media.getBitmap(MainActivity.mainActivity.contentResolver, uri)
+
+                // loading profile image from local cache
+//                    loadProfile(uri.toString())
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+        }
     }
 }
