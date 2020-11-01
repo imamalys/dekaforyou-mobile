@@ -32,6 +32,7 @@
         app:layout_constraintBottom_toTopOf="@id/rl_email"
         android:layout_margin="50dp"
         android:textColor="#FFFFFF" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/rl_email"
         android:layout_width="match_parent"

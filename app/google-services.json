@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "301326671687",
+    "firebase_url": "https://rsdk-push-notifications.firebaseio.com",
+    "project_id": "rsdk-push-notifications",
+    "storage_bucket": "rsdk-push-notifications.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:301326671687:android:9988d05fb67d2ec639f662",
+        "android_client_info": {
+          "package_name": "com.dekate.dekaforyou"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "301326671687-4bulukp271mpkp3mvsl4eujpml983lhm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dekate.dekaforyou",
+            "certificate_hash": "fa9cd53cce0b0f53373cf113628bb7cc8269a125"
+          }
+        },
+        {
+          "client_id": "301326671687-ktfsmtd6sd2nh1m8f2fvnn9mt8kl9t5m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFf7momVSjMd2MEx4xq0KTDeS4-4I7BDg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "301326671687-ktfsmtd6sd2nh1m8f2fvnn9mt8kl9t5m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

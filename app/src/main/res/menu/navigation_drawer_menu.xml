@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/notifikasi"
+        android:title="Notifikasi"
+        android:icon="@drawable/icon_notifcation"/>
+    <item android:id="@+id/ajukan_cuti"
+        android:title="Ajukan Cuti"
+        android:icon="@drawable/icon_ajukan_cuti"/>
+    <item android:id="@+id/ajukan_lembur"
+        android:title="Ajukan Lembur"
+        android:icon="@drawable/icon_ajukan_lembur"/>
+    <item android:id="@+id/tukar_shift"
+        android:title="Tukar Shift"
+        android:icon="@drawable/icon_tukar_shift"/>
+    <item android:id="@+id/laporan_kehadiran"
+        android:title="Laporan Kehadiran"
+        android:icon="@drawable/icon_laporan_kehadiran"/>
+    <item android:id="@+id/kalender_agenda"
+        android:title="Kalender/Agenda"
+        android:icon="@drawable/icon_calendar"/>
+    <item android:id="@+id/profile_saya"
+        android:title="Profile Saya"
+        android:icon="@drawable/icon_my_profile"/>
+    <item android:id="@+id/pengaturan"
+        android:title="Pengaturan"
+        android:icon="@drawable/icon_settings"/>
+    <item android:id="@+id/panduan"
+        android:title="Panduan"
+        android:icon="@drawable/icon_panduan"/>
+    <item android:id="@+id/tiket_bantuan"
+        android:title="Tiket Bantuan"
+        android:icon="@drawable/icon_ticket"/>
+    <item android:id="@+id/logout"
+        android:title="Logout"
+        android:icon="@drawable/icon_logout" />
+</menu>

@@ -12,6 +12,7 @@ class HeaderInterceptor : Interceptor, Authenticator {
             builder
                 .header("Accept", "application/json")
                 .header("Content-Type", "application/json")
+                .header("Connection", "close")
                 .header("Authorization", LoginConstant.getLoginToken())
                 .build()
         } else {

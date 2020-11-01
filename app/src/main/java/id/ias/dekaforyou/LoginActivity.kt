@@ -1,6 +1,8 @@
 package id.ias.dekaforyou
 
 import LoadingDialog
+import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -9,14 +11,21 @@ import android.text.TextWatcher
 import android.util.Patterns
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.blankj.utilcode.util.PhoneUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.MultiplePermissionsReport
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import id.ias.dekaforyou.constant.LoginConstant
 import id.ias.dekaforyou.data.GlobalUser
+import id.ias.dekaforyou.http.HttpResult
 import id.ias.dekaforyou.http.RetrofitManager
+import id.ias.dekaforyou.model.UserModel
 import id.ias.dekaforyou.util.ErrorUtil
 import kotlinx.android.synthetic.main.activity_login.*
-import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
+import retrofit2.Call
+import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
 
@@ -29,6 +38,8 @@ class LoginActivity : AppCompatActivity() {
         if(LoginConstant.getLoginToken() != "") {
             goToMainActivity()
         }
+
+        checkPermission()
         setupAction()
     }
 
@@ -67,37 +78,65 @@ class LoginActivity : AppCompatActivity() {
                 val params = HashMap<String, Any>()
                 params["username"] = et_username.text.toString()
                 params["password"] = et_password.text.toString()
-                RetrofitManager.getInstance()?.apiService?.loginUser(params)
-                    ?.observeOn(AndroidSchedulers.mainThread())
-                    ?.subscribeOn(Schedulers.io())
-                    ?.subscribe({ result ->
+                params["imei"] = PhoneUtils.getIMEI()
+
+                RetrofitManager.getInstance()?.apiService?.loginUser(params)?.enqueue(object : retrofit2.Callback<HttpResult<ArrayList<UserModel>>> {
+                    override fun onFailure(
+                        call: Call<HttpResult<ArrayList<UserModel>>>,
+                        t: Throwable
+                    ) {
                         loading.dismiss()
-                        if (result.success) {
-                            try {
-                                result.data?.let {
-                                    val user = it[0]
-                                    LoginConstant.setLoginUser(user.token!!, user.id, user.name)
-                                    ToastUtils.showLong("Sukses")
-                                    GlobalUser.currentUserModel = user
-                                    goToMainActivity()
-                                }?: run {
-                                    ToastUtils.showLong("Terdapat masalah pada Pengguna, Silahkan Hubungi Admin")
-                                }
-                            } catch (e: Throwable) {
-                                e.printStackTrace()
-                            }
-                        } else {
-                            ToastUtils.showLong(result.msg)
-                        }
-                    }, {error ->
-                        loading.dismiss()
-                        val errBody = ErrorUtil.getErrorMessage(error)
+                        val errBody = ErrorUtil.getErrorMessage(t)
                         ToastUtils.showLong(errBody)
-                    })
+                    }
+
+                    override fun onResponse(
+                        call: Call<HttpResult<ArrayList<UserModel>>>,
+                        response: Response<HttpResult<ArrayList<UserModel>>>
+                    ) {
+                        loading.dismiss()
+                        if (response.isSuccessful) {
+                            if (response.body()!!.success) {
+                                try {
+                                    response.body()?.data.let {
+                                        val user = it?.get(0)
+                                        LoginConstant.setLoginUser(user?.token!!, user.id, user.name, user.profile)
+                                        ToastUtils.showLong("Sukses")
+                                        GlobalUser.currentUserModel = user
+                                        goToMainActivity()
+                                    }
+                                } catch (e: Throwable) {
+                                    e.printStackTrace()
+                                }
+                            } else {
+                                ToastUtils.showLong(response.body()?.msg)
+                            }
+                        }
+                    }
+                })
             } else {
                 ToastUtils.showLong("Username dan Password tidak boleh kosong")
             }
         }
+    }
+
+    private fun checkPermission() {
+        Dexter.withContext(applicationContext)
+            .withPermissions(Manifest.permission.READ_PHONE_STATE, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION)
+            .withListener(object : MultiplePermissionsListener {
+                @SuppressLint("MissingPermission")
+                override fun onPermissionsChecked(report: MultiplePermissionsReport) {
+
+                }
+
+                override fun onPermissionRationaleShouldBeShown(
+                    permission: MutableList<com.karumi.dexter.listener.PermissionRequest>?,
+                    token: PermissionToken?
+                ) {
+                    token?.continuePermissionRequest();
+                }
+
+            }).check()
     }
 
     private fun goToMainActivity() {

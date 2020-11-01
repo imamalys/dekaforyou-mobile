@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:allowBackup="true"
@@ -20,29 +21,19 @@
         android:supportsRtl="true"
         android:theme="@style/NoActionBar"
         tools:ignore="UnusedAttribute">
-        <activity android:name=".view.activity.TukarShiftActivity">
-        </activity>
-        <activity android:name=".view.activity.ClockResponseActivity">
-
-        </activity>
-        <activity android:name=".LoginActivity">
+        <activity android:name=".SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".GuideActivity" />
-        <activity android:name=".MainActivity" >
+        <activity android:name=".LoginActivity">
         </activity>
-        <!-- uCrop cropping activity -->
-        <activity
-            android:name="com.yalantis.ucrop.UCropActivity"
-            android:screenOrientation="portrait" />
-
-        <!-- cache directory file provider paths -->
-        <activity android:name=".helper.ImagePickerActivity" />
-        <!-- cache directory file provider paths -->
+        <activity android:name=".GuideActivity" />
+        <activity android:name=".MainActivity"></activity> <!-- uCrop cropping activity -->
+        <activity android:name="com.yalantis.ucrop.UCropActivity" /> <!-- cache directory file provider paths -->
+        <activity android:name=".helper.ImagePickerActivity" /> <!-- cache directory file provider paths -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -52,7 +43,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-        <!-- Recommended for Android 9 (API level 28) and lower. -->
-        <!-- Required for Android 10 (API level 29) and higher. -->
     </application>
+
 </manifest>

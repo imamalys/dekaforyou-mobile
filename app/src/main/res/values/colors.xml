@@ -4,4 +4,10 @@
     <color name="colorPrimaryDark">#007AFE</color>
     <color name="colorAccent">#2F80ED</color>
     <color name="white">#F2F2F2</color>
+    <color name="grey">#57FFFFFF</color>
+    <color name="red_background">#EB5757</color>
+    <color name="red_button">#E87777</color>
+    <color name="green_text">#219653</color>
+    <color name="green_background">#27AE60</color>
+    <color name="green_button">#64C38C</color>
 </resources>

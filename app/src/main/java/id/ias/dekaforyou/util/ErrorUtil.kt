@@ -15,13 +15,16 @@ class ErrorUtil {
                     errorMessage = errorObject.getString("message")
                 } catch (exception: Exception) {
                     if (e.response()?.raw()?.code() == 400) {
-                        errorMessage = "Login session expired, please try re-login"
-                    } else {
-                        errorMessage = "Network issues, please try again"
+                        errorMessage = "Sesi login tidak valid, silahkan login ulang"
+                    } else if(e.response()?.raw()?.code() == 500) {
+                        errorMessage = "Masalah jaringan, silahkan coba lagi"
+                    }
+                    else {
+                        errorMessage = "Masalah jaringan, silahkan coba lagi"
                     }
                 }
             } else {
-                errorMessage = "Network issues, please try again"
+                errorMessage = "Masalah jaringan, silahkan coba lagi"
             }
             return errorMessage
         }

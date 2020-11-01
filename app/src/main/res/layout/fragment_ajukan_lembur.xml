@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.fragment.TukarShiftFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@drawable/blue_linier_main_menu_bg"
+            android:padding="10dp"
+            android:id="@+id/ll_top">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:id="@+id/iv_back"
+                android:src="@drawable/ic_arrow_white" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textAllCaps="true"
+                android:text="Lembur"
+                android:textColor="#FFFFFF"
+                android:layout_centerHorizontal="true"/>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ll_calendar_view"
+            android:layout_marginTop="70dp"
+            android:background="@null"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/ll_top">
+
+            <com.archit.calendardaterangepicker.customviews.DateRangeCalendarView
+                android:id="@+id/calendar"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="#FFFFFF"
+                app:selected_date_circle_color="#2F80ED"
+                app:default_date_color="#2F80ED"
+                app:range_date_color="#2F80ED"
+                app:range_color="#F0F2FE"
+                app:week_color="#B3B3B3"
+                app:date_selection_mode="free_range">
+            </com.archit.calendardaterangepicker.customviews.DateRangeCalendarView>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_lembur_caption"
+            android:text="Pilih Jam Lembur"
+            app:layout_constraintTop_toBottomOf="@+id/ll_calendar_view"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="15dp"
+            android:textColor="#000000" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="10dp"
+            android:weightSum="2"
+            android:id="@+id/ll_time"
+            android:background="@drawable/time_picker_border"
+            app:layout_constraintTop_toBottomOf="@id/tv_lembur_caption">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Awal"
+                    android:textColor="#4F4F4F"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="11:30"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    android:textSize="40sp"
+                    android:id="@+id/tv_jam_shift_awal"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginRight="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Akhir"
+                    android:textColor="#4F4F4F"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="11:30"
+                    android:textColor="#000000"
+                    android:textStyle="bold"
+                    android:textSize="36sp"
+                    android:id="@+id/tv_jam_shift_akhir"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_alasan_lembur"
+            android:text="Alasan Lembur"
+            app:layout_constraintTop_toBottomOf="@+id/ll_time"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="15dp"
+            android:textColor="#000000" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:orientation="vertical"
+            android:layout_marginRight="20dp"
+            android:paddingTop="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="5dp"
+            android:id="@+id/ll_alasan"
+            android:background="@drawable/time_picker_border"
+            app:layout_constraintTop_toBottomOf="@id/tv_alasan_lembur" >
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textMultiLine"
+                android:gravity="start|top"
+                android:textSize="12sp"
+                android:hint="Jelaskan alasan lembur anda"
+                android:background="@null" />
+        </LinearLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="60dp"
+            app:layout_constraintTop_toBottomOf="@id/ll_alasan"
+            android:layout_marginTop="45dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/main_linier_deep_corner"
+            android:textColor="#FFFFFF"
+            android:text="Ajukan"
+            android:textStyle="bold"
+            android:textSize="16sp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

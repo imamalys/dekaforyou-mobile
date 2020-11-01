@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="10dp"
+    android:layout_marginStart="20dp"
+    android:layout_marginEnd="20dp"
+    android:layout_marginBottom="10dp"
+    app:cardCornerRadius="5dp"
+    android:elevation="1dp"
+    app:cardElevation="1dp"
+    android:background="@drawable/time_picker_border">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/iv_profile"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_nama"
+            android:text="nama"
+            android:textColor="#828282"
+            android:textSize="12sp"
+            android:layout_marginLeft="5dp"
+            app:layout_constraintLeft_toRightOf="@id/iv_profile"
+            app:layout_constraintRight_toLeftOf="@id/btn_status"
+            android:layout_marginRight="10dp"
+            app:layout_constraintBottom_toTopOf="@id/tv_alasan"
+            android:maxLines="2"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Alasan"
+            android:id="@+id/tv_alasan"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            app:layout_constraintLeft_toRightOf="@id/iv_profile"
+            app:layout_constraintRight_toLeftOf="@id/btn_status"
+            android:layout_marginRight="10dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_tambahan"
+            android:text="tambahan"
+            android:textColor="#828282"
+            android:textSize="12sp"
+            android:layout_marginLeft="5dp"
+            android:maxLines="2"
+            app:layout_constraintLeft_toRightOf="@id/iv_profile"
+            app:layout_constraintRight_toLeftOf="@id/btn_status"
+            android:layout_marginRight="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_alasan"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <Button
+            android:layout_width="120dp"
+            android:layout_height="30dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/btn_status"
+            android:text="Status"
+            android:layout_marginRight="10dp"
+            android:textColor="#FFFDFD"
+            android:background="@drawable/blue_corner"
+            android:enabled="false" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
